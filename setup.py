@@ -13,7 +13,8 @@ dependencies = [
     'colorama',
     'coverage',
     'unidecode',
-    'lxml'
+    'lxml',
+    'pygments',
 ]
 if sys.version_info[0] == 2:
     dependencies.append('mock')

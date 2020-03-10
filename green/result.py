@@ -16,9 +16,7 @@ from green.version import pretty_version
 
 from pygments import highlight
 from pygments.lexers.python import PythonTracebackLexer
-#  from pygments.styles.vim import VimStyle
-from pygments.styles import get_style_by_name
-from pygments.formatters.terminal256 import TerminalTrueColorFormatter
+from pygments.formatters.terminal import TerminalFormatter
 
 # introduced in Python 3
 try:
@@ -656,15 +654,14 @@ class GreenTestResult(BaseTestResult):
                     # Done with this frame, capture it.
                     relevant_frames.append(frame)
 
-                #  +++
-                raw_output = ''.join(relevant_frames)
-                style = get_style_by_name ('default')
-                formatter = TerminalTrueColorFormatter (style= style)
-                lexer =PythonTracebackLexer()
-                higlighted_output = highlight  (raw_output, lexer, formatter)
-                self.stream.write(higlighted_output)
-                #  ---
-                #  self.stream.write(''.join(relevant_frames))
+                if self.colors.termcolor:
+                    raw_output = ''.join(relevant_frames)
+                    formatter = TerminalFormatter()
+                    lexer = PythonTracebackLexer()
+                    higlighted_output = highlight(raw_output, lexer, formatter)
+                    self.stream.write(higlighted_output)
+                else:
+                    self.stream.write(''.join(relevant_frames))
 
             # Captured output for failing tests
             self.displayStdout(test)

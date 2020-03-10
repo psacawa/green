@@ -22,6 +22,9 @@ from green.suite import GreenTestSuite
 
 class TestGreenTestSuite(unittest.TestCase):
 
+    def test_to_fail(self):
+        self.assertEqual (0, 1)
+
     def test_empty(self):
         """
         An empty suite can be instantiated.
